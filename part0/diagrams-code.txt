@@ -1,0 +1,42 @@
+title New Note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+note over browser: form content
+server-->browser: HTTP status code 302 - Found
+note over server: The server create a new note, and add it to notes
+note over server: The server redirect the browser
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: notes.html
+browser->server: HTTP GET main.css
+server-->browser: main.css
+browser->server: HTTP GET main.js
+server-->browser: main.js
+note over browser: The browser runs the main.js script, which returns data.json
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: data.json
+note left of server: data.json contains the notes data
+note over browser: browser executes the event handler that renders notes to display
+
+
+title Single Page App
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server-->browser: HTTP status code 304 - spa.html
+browser->server: HTTP GET stylesheet main.css
+server-->browser: HTTP status code 304 - main.css
+browser->server: HTTP GET script spa.js
+server-->browser: HTTP status code 304 - spa.js
+note over browser: The browser runs the spa.js script, which returns data.json
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: HTTP status code 200 - data.json
+note left of server: data.json contains the notes data
+note over browser: browser executes the event handler that renders notes to display
+
+title New Note SPA
+
+note over browser: The browser make a POST request from .js received from the server
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note over server: The POST request contain the new note as JSON-data
+server-->browser: HTTP status code 201 created
+note over server: the server does not ask for a redirect, the browser stays on the same page
+note over browser: note over browser: browser executes the event handler that renders notes to display
