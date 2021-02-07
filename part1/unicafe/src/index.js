@@ -14,6 +14,27 @@ const Button = (props) => {
 };
 
 const Statistics = (props) => {
+  const all = props.good + props.neutral + props.bad;
+  const average = (props.good - props.bad) / all;
+  const positivePercentage = `${(props.good / all) * 100} %`;
+
+  if (props.good > 0 || props.neutral > 0 || props.bad > 0) {
+    return (
+      <div>
+        <Statistic text="good" value={props.good} />
+        <Statistic text="neutral" value={props.neutral} />
+        <Statistic text="bad" value={props.bad} />
+        <Statistic text="all" value={all} />
+        <Statistic text="average" value={average} />
+        <Statistic text="positive" value={positivePercentage} />
+      </div>
+    );
+  }
+
+  return <p>No feedback given</p>;
+};
+
+const Statistic = (props) => {
   return (
     <p>
       {props.text} {props.value}
@@ -27,22 +48,18 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
+  const handleGood = () => setGood(good + 1);
+  const handleNeutral = () => setNeutral(neutral + 1);
+  const handleBad = () => setBad(bad + 1);
+
   return (
     <div>
       <Title title="give feedback" />
-      <Button handleClick={() => setGood(good + 1)} text="good" />
-      <Button handleClick={() => setNeutral(neutral + 1)} text="neutral" />
-      <Button handleClick={() => setBad(bad + 1)} text="bad" />
+      <Button handleClick={handleGood} text="good" />
+      <Button handleClick={handleNeutral} text="neutral" />
+      <Button handleClick={handleBad} text="bad" />
       <Title title="statistics" />
-      <Statistics text="good" value={good} />
-      <Statistics text="neutral" value={neutral} />
-      <Statistics text="bad" value={bad} />
-      <Statistics text="all" value={good + neutral + bad} />
-      <Statistics text="average" value={good - bad} />
-      <Statistics
-        text="positive"
-        value={(good * 100) / (good + neutral + bad) + '%'}
-      />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };
