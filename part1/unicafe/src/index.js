@@ -21,12 +21,16 @@ const Statistics = (props) => {
   if (props.good > 0 || props.neutral > 0 || props.bad > 0) {
     return (
       <div>
-        <Statistic text="good" value={props.good} />
-        <Statistic text="neutral" value={props.neutral} />
-        <Statistic text="bad" value={props.bad} />
-        <Statistic text="all" value={all} />
-        <Statistic text="average" value={average} />
-        <Statistic text="positive" value={positivePercentage} />
+        <table>
+          <tbody>
+            <Statistic text="good" value={props.good} />
+            <Statistic text="neutral" value={props.neutral} />
+            <Statistic text="bad" value={props.bad} />
+            <Statistic text="all" value={all} />
+            <Statistic text="average" value={average} />
+            <Statistic text="positive" value={positivePercentage} />
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -36,9 +40,10 @@ const Statistics = (props) => {
 
 const Statistic = (props) => {
   return (
-    <p>
-      {props.text} {props.value}
-    </p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   );
 };
 
