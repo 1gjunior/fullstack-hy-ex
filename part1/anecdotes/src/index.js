@@ -3,11 +3,29 @@ import ReactDOM from 'react-dom';
 
 const App = (props) => {
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState({
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  });
+
+  const addVote = () => {
+    setVotes({
+      ...votes,
+      [selected]: votes[selected] + 1,
+    });
+  };
 
   return (
     <div>
-      {props.anecdotes[selected]}
+      <div>{props.anecdotes[selected]}</div>
+      <ShowResults votes={votes[selected]} />
+      <Button label="vote" handleClick={addVote} />
       <Button
+        label="next anecdote"
         handleClick={() =>
           setSelected((prevSelected) => (prevSelected = getRand()))
         }
@@ -37,12 +55,12 @@ const getRand = (function () {
   };
 })();
 
-const Button = ({ handleClick }) => {
-  return (
-    <div>
-      <button onClick={handleClick}>next anecdote</button>
-    </div>
-  );
+const Button = ({ handleClick, label }) => {
+  return <button onClick={handleClick}>{label}</button>;
+};
+
+const ShowResults = ({ votes }) => {
+  return <div>has {votes} votes</div>;
 };
 
 ReactDOM.render(<App anecdotes={anecdotes} />, document.getElementById('root'));
