@@ -12,6 +12,8 @@ const App = (props) => {
     5: 0,
   });
 
+  const mostVoted = Object.keys(votes).sort((a, b) => votes[b] - votes[a])[0];
+
   const addVote = () => {
     setVotes({
       ...votes,
@@ -21,6 +23,7 @@ const App = (props) => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <div>{props.anecdotes[selected]}</div>
       <ShowResults votes={votes[selected]} />
       <Button label="vote" handleClick={addVote} />
@@ -30,6 +33,9 @@ const App = (props) => {
           setSelected((prevSelected) => (prevSelected = getRand()))
         }
       />
+      <h1>Anecdote with most votes</h1>
+      <div>{props.anecdotes[mostVoted]}</div>
+      <ShowResults votes={votes[mostVoted]} />
     </div>
   );
 };
